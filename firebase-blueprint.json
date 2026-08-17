@@ -1,0 +1,86 @@
+{
+  "entities": {
+    "RaffleNumber": {
+      "title": "Raffle Number",
+      "description": "A single raffle number slot and its allocation status",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 3 },
+        "status": { "type": "string", "enum": ["available", "reserved", "sold"] },
+        "buyerName": { "type": "string", "maxLength": 100 },
+        "buyerPhone": { "type": "string", "maxLength": 20 },
+        "buyerEmail": { "type": "string", "maxLength": 100 },
+        "reservationId": { "type": "string", "maxLength": 50 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "status", "updatedAt"]
+    },
+    "Reservation": {
+      "title": "Reservation",
+      "description": "A booking transaction containing one or more numbers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 50 },
+        "buyerName": { "type": "string", "maxLength": 100 },
+        "buyerPhone": { "type": "string", "maxLength": 20 },
+        "buyerEmail": { "type": "string", "maxLength": 100 },
+        "numbers": { "type": "array" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "totalValue": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "buyerName", "buyerPhone", "numbers", "status", "totalValue", "createdAt", "updatedAt"]
+    },
+    "RaffleConfig": {
+      "title": "Raffle Configuration",
+      "description": "Global settings for the raffle including PIX details, price, and active numbers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 50 },
+        "pixKey": { "type": "string", "maxLength": 100 },
+        "pixName": { "type": "string", "maxLength": 100 },
+        "pricePerNumber": { "type": "number" },
+        "activeNumbers": { "type": "array" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "pixKey", "pixName", "pricePerNumber", "activeNumbers"]
+    },
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Registered member shipping details for prize delivery",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 20 },
+        "city": { "type": "string", "maxLength": 100 },
+        "state": { "type": "string", "maxLength": 50 },
+        "fullAddress": { "type": "string", "maxLength": 300 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "phone", "city", "state", "fullAddress"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Member registration and delivery address information"
+    },
+    "config/{configId}": {
+      "schema": "RaffleConfig",
+      "description": "Raffle system configuration and PIX settings"
+    },
+    "numbers/{numberId}": {
+      "schema": "RaffleNumber",
+      "description": "Raffle numbers 00-99 and their allocation status"
+    },
+    "reservations/{reservationId}": {
+      "schema": "Reservation",
+      "description": "User reservations of raffle numbers"
+    }
+  }
+}

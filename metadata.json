@@ -1,0 +1,6 @@
+{
+  "name": "Venda e Controle de Rifa",
+  "description": "Aplicação para venda, reserva e controle de números disponíveis e vendidos para a Grande Rifa Maçônica.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
